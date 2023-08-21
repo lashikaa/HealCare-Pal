@@ -7,6 +7,7 @@ from joblib import load
 import requests, webbrowser
 from bs4 import BeautifulSoup, Doctype
 import csv
+import streamlit.components.v1 as components
 
 
 def add_bg_from_url():
@@ -49,20 +50,17 @@ def predict_disease_from_symptom(symptom_list):
         symptoms[s] = 1
     df_test = pd.DataFrame(columns=list(symptoms.keys()))
     df_test.loc[0] = np.array(list(symptoms.values()))
-    df_test
+    #df_test
     clf = load(str("svc_algorithm.joblib"))
     result = clf.predict(df_test)
     del df_test
-    st.markdown("<h2 style='padding-top:20;'>Let's know about your Disease</h2>", unsafe_allow_html=True)
+
+    # Display the selected options
+    st.write("You Selected:", options)
+
+    st.markdown("<h3 style='padding-top:20px;'>Let's know about your Disease</h3>", unsafe_allow_html=True)
     return f"{result[0]}"
 
-st.markdown("""
-<style>
-.stMultiSelect {
-  color: #ed53ce;
-}
-</style>
-""", unsafe_allow_html=True)
 
 options = st.multiselect(
      'Select your symptoms : ',
@@ -82,24 +80,33 @@ options = st.multiselect(
 'itching'])
 
 
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+local_css("style.css")
+
 ans=predict_disease_from_symptom(options)
 if(ans[len(ans)-1]==' '):
     ans=ans[:-1]
 print ("x"+ans+"x")
-with st.expander("Look for the Disease "):
+with st.expander("Disease "):
     st.header(ans)
 
-with st.expander("See About Disease "):
+
+with st.expander("About Disease "):
     df=pd.read_csv('symptom_Description.csv')
     disease=str(ans);
     df_new = df[df['Disease'] == disease]
     
     disease=df_new['Description'].values
-    strrrrr="";
+    strrr="";
     i=0
     for i in disease:
-        strrrrr+=i
-    st.write(" • "+strrrrr)
+        strrr+=i
+    disp = f'<div style="font-size: 18px; font-weight: 700">{" • "+strrr}</div>'
+    st.write(disp, unsafe_allow_html=True)
+
                 
     google_search = requests.get ("https://www.google.com/search?q="+ ans)
     soup = BeautifulSoup(google_search.text, 'html.parser')
@@ -110,7 +117,7 @@ with st.expander("See About Disease "):
         st.write(" • "+search_res[i].string)
         i+=1;
 
-with st.expander("See About Medical Test  "):
+with st.expander("Medical Test  "):
     df=pd.read_csv('symptom_test.csv')
     disease=str(ans);
     df_new = df[df['Disease'] == disease]
@@ -129,10 +136,11 @@ with st.expander("See About Medical Test  "):
                         dis+="\n •"
                   else:
                         dis+=prec[x]
-            st.write(dis)
+            disp = f'<div style="font-size: 18px; font-weight: 700">{dis}</div>'
+            st.write(disp, unsafe_allow_html=True)
    
 
-with st.expander("See About Precautions  "):
+with st.expander("Precautions  "):
     df=pd.read_csv('symptom_precaution.csv')
     disease=str(ans);
     df_new = df[df['Disease'] == disease]
@@ -143,6 +151,10 @@ with st.expander("See About Precautions  "):
             i=2
             continue
         prec=" • "+str(df_new[col].values[0])+"\n"
-        st.write(prec);
+        disp = f'<div style="font-size: 18px; font-weight: 700">{prec}</div>'
+        st.write(disp, unsafe_allow_html=True)
 
-    
+st.empty()
+
+footer_text = "Please note that this chatbot is designed to provide general precautions and recommendations. It is not a substitute for professional medical advice. Always consult a healthcare professional or doctor before making decisions about medications or treatments."
+st.markdown(f'<p style="left: 0; bottom: 0; width: 100%; text-align: center; padding: 10px 0;">{footer_text}</p>', unsafe_allow_html=True)   

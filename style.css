@@ -1,0 +1,5 @@
+div[data-testid="stExpander"] div[role="button"] p {
+    font-size: 18px;
+    font-weight: 600;
+    color:deeppink;
+}
