@@ -4,8 +4,8 @@
 
 # To Run the Project:
 
-<ol>
+<ul>
   <li>Create a Virtual Environment</li>
   <li>Install the Streamlit and dependencies</li>
   <li>Then run the Streamlit app.py</li>
-</ol>
+</ul>
