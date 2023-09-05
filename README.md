@@ -9,3 +9,4 @@
   <li>Install the Streamlit and dependencies</li>
   <li>Then run the Streamlit app.py</li>
 </ul>
+![Screenshot 2023-09-05 211333](https://github.com/lashikaa/HealCare-Pal/assets/47450171/56700160-16e9-4187-908d-d7a6c506234c)
