@@ -6,7 +6,7 @@
 <p align="justify">The application is used to display the disease name, description about the disease, Tests to be taken and the precautionary measures in respect to the symptoms selected by the user. This chatbot is made available by deploying it into the Streamlit application. The algorithm used for training is SVM. </p>
 
 
-# To Run the Project:
+## To Run the Project:
 
 <ul>
   <li>Create a Virtual Environment</li>
