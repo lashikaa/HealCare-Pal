@@ -10,7 +10,7 @@
 
 <ul>
   <li>Create a Virtual Environment</li>
-  <li>Install the Streamlit and dependencies</li>
+  <li>Install the Dependencies such as Streamlit, Pandas, Numpy and etc.</li>
   <li>Then run the Streamlit app.py</li>
 </ul>
 
